@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Props\FullSphereSmooth.obj" />
+    <None Remove="Props\FullTorusNormalized.obj" />
+    <None Remove="Props\WoodenChessKnight_clean.obj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Props\FullSphereSmooth.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Props\WoodenChessKnight_clean.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ObjLoader\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Props\FullTorusNormalized.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CjClutter.ObjLoader.Loader">
+      <HintPath>ObjLoader\CjClutter.ObjLoader.Loader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
