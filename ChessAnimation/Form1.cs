@@ -73,6 +73,10 @@ namespace ChessAnimation
 			Bitmap bitmap = new Bitmap(this.pictureBox_workingArea.Size.Width, this.pictureBox_workingArea.Size.Height);
 			this.pictureBox_workingArea.Image = bitmap;
 			projectData.workingArea = this.pictureBox_workingArea;
+			using (var snoop = new BmpPixelSnoop((Bitmap)projectData.workingArea.Image))
+			{
+				projectData.snoop = snoop;
+			}
 
 			projectData.zBuffer = new float[projectData.workingArea.Width, projectData.workingArea.Height];
 

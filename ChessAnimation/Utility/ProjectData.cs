@@ -14,10 +14,13 @@ namespace ChessAnimation.Utility
 		// public int a { get; set; } = 1;
 		// public Vector4[] vertices { get; set; }
 		
+		// variables
 		public float angle { get; set; } = 0.1f;
-		public PictureBox workingArea { get; set; }
-
 		public List<Object3D> objects { get; set; }
+
+		// bitmap
+		public PictureBox workingArea { get; set; }
+		public BmpPixelSnoop snoop { get; set; }
 		public float[,] zBuffer { get; set; }
 
 		// camera
