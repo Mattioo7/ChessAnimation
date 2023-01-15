@@ -10,23 +10,16 @@ namespace ChessAnimation.Drawing
 {
 	internal static class BasicDrawing
 	{
-
-
-		public static void drawOutline(Object3D object3D, ProjectData projectData)
+		public static void drawOutlines(ProjectData projectData)
 		{
-			/*using (Graphics g = Graphics.FromImage(projectData.workingArea.Image))
+			foreach (Object3D object3D in projectData.objects)
 			{
-				for (int i = 0; i < object3D.polygons.Count; ++i)
-				{
-					for (int j = 0; j < object3D.polygons[i].verticesCopy.Count; ++j)
-					{
-						Vertex vertex1 = object3D.polygons[i].verticesCopy[j];
-						Vertex vertex2 = object3D.polygons[i].verticesCopy[(object3D.polygons[i].verticesCopy.Count + j - 1) % object3D.polygons[i].verticesCopy.Count];
-						g.DrawLine(new Pen(Color.Black, 1), vertex1, vertex2);
-					}
-				}
-			}*/
-
+				drawOutline(projectData, object3D);
+			}
+		}
+		
+		public static void drawOutline(ProjectData projectData, Object3D object3D)
+		{
 			for (int i = 0; i < object3D.polygons.Count; ++i)
 			{
 				for (int j = 0; j < object3D.polygons[i].verticesCopy.Count; ++j)

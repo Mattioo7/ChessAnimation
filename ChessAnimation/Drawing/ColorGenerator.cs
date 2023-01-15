@@ -1,4 +1,4 @@
-﻿/*using ChessAnimation.Models;
+﻿using ChessAnimation.Models;
 using ChessAnimation.Utility;
 using System;
 using System.Collections.Generic;
@@ -17,12 +17,12 @@ namespace ChessAnimation.Drawing
 			float ks = projectData.ks;
 			int m = projectData.m;
 			Color sun = projectData.sunColor;
-			Vector3 sunPosition = new Vector3(projectData.sunPosition.X, projectData.sunPosition.Y, projectData.sunPosition.Z * projectData.sunHeightModifier);
+			Vector3 sunPosition = new Vector3(projectData.sunPosition.X, projectData.sunPosition.Y, projectData.sunPosition.Z );
 			Color objColor = projectData.objColor; // zawsze będzie ustawiony, bo domyślny
 
-			foreach (Vertex vertex in polygon.vertices)
+			foreach (Vertex vertex in polygon.verticesCopy)
 			{
-				if (projectData.useTexture)
+				/*if (projectData.useTexture)
 				{
 					int x = (int)vertex.x;
 					int y = (int)vertex.y;
@@ -41,12 +41,12 @@ namespace ChessAnimation.Drawing
 					{
 						objColor = texture.GetPixel(x, y);
 					}
-				}
+				}*/
 
 				Vector3 sunVector = sunPosition - vertex;
 				Vector3 L = Vector3.Normalize(sunVector);
 
-				Vector3 N = Vector3.Normalize(vertex.normal);
+				Vector3 N = Vector3.Normalize(new Vector3(vertex.normal.X, vertex.normal.Y, vertex.normal.Z));
 				Vector3 rVec = 2 * dot(N, L) * N - L;
 				Vector3 R = Vector3.Normalize(rVec);
 
@@ -92,9 +92,9 @@ namespace ChessAnimation.Drawing
 
 		public static Color generatePixelColor(Polygon polygon, int x, int y)
 		{
-			Vertex v1 = polygon.vertices[0];
-			Vertex v2 = polygon.vertices[1];
-			Vertex v3 = polygon.vertices[2];
+			Vertex v1 = polygon.verticesCopy[0];
+			Vertex v2 = polygon.verticesCopy[1];
+			Vertex v3 = polygon.verticesCopy[2];
 
 			float denominator = polygon.denominator;
 			float W_v1 = ((v2.y - v3.y) * (x - v3.x) + (v3.x - v2.x) * (y - v3.y)) / denominator;
@@ -125,10 +125,10 @@ namespace ChessAnimation.Drawing
 			float ks = projectData.ks;
 			int m = projectData.m;
 			Color sun = projectData.sunColor;
-			Vector3 sunPosition = new Vector3(projectData.sunPosition.X, projectData.sunPosition.Y, projectData.sunPosition.Z * projectData.sunHeightModifier);
+			Vector3 sunPosition = new Vector3(projectData.sunPosition.X, projectData.sunPosition.Y, projectData.sunPosition.Z);
 			Color objColor = projectData.objColor; // zawsze będzie ustawiony, bo domyślny
 
-			if (projectData.useTexture)
+			/*if (projectData.useTexture)
 			{
 				if (x > texture.Width)
 				{
@@ -144,7 +144,7 @@ namespace ChessAnimation.Drawing
 				{
 					objColor = texture.GetPixel(x, y);
 				}
-			}
+			}*/
 
 			Vector3 vertex = new Vector3(x, y, interpolateZ(polygon, x, y));
 
@@ -177,9 +177,9 @@ namespace ChessAnimation.Drawing
 			//Stopwatch timing = new Stopwatch();
 			//timing.Start();
 
-			Vertex v1 = polygon.vertices[0];
-			Vertex v2 = polygon.vertices[1];
-			Vertex v3 = polygon.vertices[2];
+			Vertex v1 = polygon.verticesCopy[0];
+			Vertex v2 = polygon.verticesCopy[1];
+			Vertex v3 = polygon.verticesCopy[2];
 
 			float denominator = polygon.denominator;
 			float W_v1 = ((v2.y - v3.y) * (x - v3.x) + (v3.x - v2.x) * (y - v3.y)) / denominator;
@@ -198,18 +198,22 @@ namespace ChessAnimation.Drawing
 			return normal;
 		}
 
-		public static int interpolateZ(Polygon polygon, int x, int y)
+		public static float interpolateZ(Polygon polygon, int x, int y)
 		{
-			Vertex v1 = polygon.vertices[0];
+			/*Vertex v1 = polygon.vertices[0];
 			Vertex v2 = polygon.vertices[1];
-			Vertex v3 = polygon.vertices[2];
+			Vertex v3 = polygon.vertices[2];*/
+
+			Vertex v1 = polygon.verticesCopy[0];
+			Vertex v2 = polygon.verticesCopy[1];
+			Vertex v3 = polygon.verticesCopy[2];
 
 			float denominator = polygon.denominator;
 			float W_v1 = ((v2.y - v3.y) * (x - v3.x) + (v3.x - v2.x) * (y - v3.y)) / denominator;
 			float W_v2 = ((v3.y - v1.y) * (x - v3.x) + (v1.x - v3.x) * (y - v3.y)) / denominator;
 			float W_v3 = 1 - W_v1 - W_v2;
 
-			int z = (int)(v1.z * W_v1 + v2.z * W_v2 + v3.z * W_v3);
+			float z = (v1.z * W_v1 + v2.z * W_v2 + v3.z * W_v3);
 
 			return z;
 		}
@@ -235,6 +239,31 @@ namespace ChessAnimation.Drawing
 			if (result > 255) result = 255; if (result < 0) result = 0;
 			return (byte)(result);
 		}
+
+		public static bool backFaceCulling(Polygon polygon, Vector3 cameraPosition)
+		{
+			Vertex v1 = polygon.verticesCopy[0];
+			Vertex v2 = polygon.verticesCopy[1];
+			Vertex v3 = polygon.verticesCopy[2];
+
+			Vector3 v1v2 = new Vector3(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
+			Vector3 v1v3 = new Vector3(v3.x - v1.x, v3.y - v1.y, v3.z - v1.z);
+
+			Vector3 normal = Vector3.Cross(v1v2, v1v3);
+
+			Vector3 cameraVector = cameraPosition - new Vector3(v1.x, v1.y, v1.z);
+			cameraVector = Vector3.Normalize(cameraVector);
+
+			float cosine = Vector3.Dot(normal, cameraVector);
+
+			if (cosine < 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }
-*/

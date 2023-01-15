@@ -12,7 +12,7 @@ namespace ChessAnimation.Models
 	{
 		// variables 
 		public Vector4 vector4 { get; set; }
-		public Vector3 normal { get; set; }
+		public Vector4 normal { get; set; }
 		public byte A { get; set; }
 		public byte R { get; set; }
 		public byte G { get; set; }
@@ -82,13 +82,13 @@ namespace ChessAnimation.Models
 		public Vertex(float x, float y, float z, Normal normal = default)
 		{
 			vector4 = new Vector4(x, y, z, 1);
-			this.normal = new Vector3(normal.X, normal.Y, normal.Z);
+			this.normal = new Vector4(normal.X, normal.Y, normal.Z, 0);
 		}
 
 		public Vertex(ObjLoader.Loader.Data.VertexData.Vertex vertex, Normal normal = default)
 		{
 			vector4 = new Vector4(vertex.X, vertex.Y, vertex.Z, 1);
-			this.normal = new Vector3(normal.X, normal.Y, normal.Z);
+			this.normal = new Vector4(normal.X, normal.Y, normal.Z, 0);
 		}
 
 		public static implicit operator Point(Vertex vertex) => new Point((int)vertex.x, (int)vertex.y);
@@ -101,6 +101,7 @@ namespace ChessAnimation.Models
 		{
 			Vertex result = new Vertex(vertex);
 			result.vector4 = Vector4.Transform(vertex.vector4, matrix);
+			result.normal = Vector4.Transform(vertex.normal, matrix);
 			return result;
 		}
 

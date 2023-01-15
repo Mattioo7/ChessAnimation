@@ -17,6 +17,10 @@ namespace ChessAnimation.Utility
 		// variables
 		public float angle { get; set; } = 0.1f;
 		public List<Object3D> objects { get; set; }
+		public float kd { get; set; } = 1f;
+		public float ks { get; set; } = 0.5f;
+		public int m { get; set; } = 20;
+		public Color objColor { get; set; } = Color.LightGreen;
 
 		// bitmap
 		public PictureBox workingArea { get; set; }
@@ -32,5 +36,20 @@ namespace ChessAnimation.Utility
 
 		// position
 		public Vector3 position { get; set; } = new Vector3(-4, 0, 0);
+
+		// sun
+		public Vector3 sunPosition { get; set; } = new Vector3(0, 0, -900);
+		public List<Vector3> sunPositions { get; set; } 
+		public Color sunColor { get; set; } = Color.White;
+
+		// fog
+		public bool fog { get; set; } = false;
+		public float fogStart { get; set; } = 1.9f;
+		public float fogEnd { get; set; } = 1.95f;
+
+		// booleans
+		public bool interpolateColor { get; set; } = true;
+		public bool drawOutline { get; set; } = true;
+		public bool fillColor { get; set; } = false;
 	}
 }

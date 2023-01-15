@@ -17,6 +17,8 @@ namespace ChessAnimation.Models
 
 		public float denominator { get; set; }
 
+		public int nr { get; set; }
+
 		public Polygon()
 		{
 			vertices = new List<Vertex>();
@@ -73,6 +75,7 @@ namespace ChessAnimation.Models
 					polygon.verticesCopy.Add(newVertexCopy);
 				}
 
+				polygon.nr = i;
 				polygons.Add(polygon);
 			}
 
@@ -84,6 +87,14 @@ namespace ChessAnimation.Models
 			Vertex v1 = this.vertices[0];
 			Vertex v2 = this.vertices[1];
 			Vertex v3 = this.vertices[2];
+			this.denominator = ((v2.y - v3.y) * (v1.x - v3.x) + (v3.x - v2.x) * (v1.y - v3.y));
+		}
+
+		public void calculateDenominatorCopy()
+		{
+			Vertex v1 = this.verticesCopy[0];
+			Vertex v2 = this.verticesCopy[1];
+			Vertex v3 = this.verticesCopy[2];
 			this.denominator = ((v2.y - v3.y) * (v1.x - v3.x) + (v3.x - v2.x) * (v1.y - v3.y));
 		}
 	}

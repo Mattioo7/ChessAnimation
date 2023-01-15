@@ -31,12 +31,26 @@
 			this.tableLayoutPanel_main = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanel_right = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.trackBar_m = new System.Windows.Forms.TrackBar();
+			this.label_mValue = new System.Windows.Forms.Label();
+			this.label_m = new System.Windows.Forms.Label();
+			this.trackBar_ks = new System.Windows.Forms.TrackBar();
+			this.label_ksValue = new System.Windows.Forms.Label();
+			this.label_ks = new System.Windows.Forms.Label();
+			this.label_kdValue = new System.Windows.Forms.Label();
+			this.label_kd = new System.Windows.Forms.Label();
+			this.trackBar_kd = new System.Windows.Forms.TrackBar();
+			this.label_position = new System.Windows.Forms.Label();
+			this.label_fps = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.pictureBox_workingArea = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel_main.SuspendLayout();
 			this.tableLayoutPanel_right.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_m)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_ks)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_kd)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_workingArea)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -71,6 +85,17 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.trackBar_m);
+			this.groupBox1.Controls.Add(this.label_mValue);
+			this.groupBox1.Controls.Add(this.label_m);
+			this.groupBox1.Controls.Add(this.trackBar_ks);
+			this.groupBox1.Controls.Add(this.label_ksValue);
+			this.groupBox1.Controls.Add(this.label_ks);
+			this.groupBox1.Controls.Add(this.label_kdValue);
+			this.groupBox1.Controls.Add(this.label_kd);
+			this.groupBox1.Controls.Add(this.trackBar_kd);
+			this.groupBox1.Controls.Add(this.label_position);
+			this.groupBox1.Controls.Add(this.label_fps);
 			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -81,10 +106,122 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "groupBox1";
 			// 
+			// trackBar_m
+			// 
+			this.trackBar_m.LargeChange = 10;
+			this.trackBar_m.Location = new System.Drawing.Point(40, 233);
+			this.trackBar_m.Maximum = 100;
+			this.trackBar_m.Minimum = 1;
+			this.trackBar_m.Name = "trackBar_m";
+			this.trackBar_m.Size = new System.Drawing.Size(176, 45);
+			this.trackBar_m.TabIndex = 12;
+			this.trackBar_m.Tag = "";
+			this.trackBar_m.TickFrequency = 20;
+			this.trackBar_m.Value = 20;
+			this.trackBar_m.Scroll += new System.EventHandler(this.trackBar_m_Scroll);
+			// 
+			// label_mValue
+			// 
+			this.label_mValue.AutoSize = true;
+			this.label_mValue.Location = new System.Drawing.Point(6, 248);
+			this.label_mValue.Name = "label_mValue";
+			this.label_mValue.Size = new System.Drawing.Size(19, 15);
+			this.label_mValue.TabIndex = 11;
+			this.label_mValue.Text = "20";
+			// 
+			// label_m
+			// 
+			this.label_m.AutoSize = true;
+			this.label_m.Location = new System.Drawing.Point(6, 233);
+			this.label_m.Name = "label_m";
+			this.label_m.Size = new System.Drawing.Size(18, 15);
+			this.label_m.TabIndex = 10;
+			this.label_m.Text = "m";
+			// 
+			// trackBar_ks
+			// 
+			this.trackBar_ks.LargeChange = 10;
+			this.trackBar_ks.Location = new System.Drawing.Point(40, 192);
+			this.trackBar_ks.Maximum = 100;
+			this.trackBar_ks.Name = "trackBar_ks";
+			this.trackBar_ks.Size = new System.Drawing.Size(176, 45);
+			this.trackBar_ks.TabIndex = 9;
+			this.trackBar_ks.Tag = "";
+			this.trackBar_ks.TickFrequency = 20;
+			this.trackBar_ks.Value = 50;
+			this.trackBar_ks.Scroll += new System.EventHandler(this.trackBar_ks_Scroll);
+			// 
+			// label_ksValue
+			// 
+			this.label_ksValue.AutoSize = true;
+			this.label_ksValue.Location = new System.Drawing.Point(6, 207);
+			this.label_ksValue.Name = "label_ksValue";
+			this.label_ksValue.Size = new System.Drawing.Size(28, 15);
+			this.label_ksValue.TabIndex = 8;
+			this.label_ksValue.Text = "0,50";
+			// 
+			// label_ks
+			// 
+			this.label_ks.AutoSize = true;
+			this.label_ks.Location = new System.Drawing.Point(6, 192);
+			this.label_ks.Name = "label_ks";
+			this.label_ks.Size = new System.Drawing.Size(18, 15);
+			this.label_ks.TabIndex = 7;
+			this.label_ks.Text = "ks";
+			// 
+			// label_kdValue
+			// 
+			this.label_kdValue.AutoSize = true;
+			this.label_kdValue.Location = new System.Drawing.Point(6, 159);
+			this.label_kdValue.Name = "label_kdValue";
+			this.label_kdValue.Size = new System.Drawing.Size(28, 15);
+			this.label_kdValue.TabIndex = 6;
+			this.label_kdValue.Text = "1,00";
+			// 
+			// label_kd
+			// 
+			this.label_kd.AutoSize = true;
+			this.label_kd.Location = new System.Drawing.Point(6, 141);
+			this.label_kd.Name = "label_kd";
+			this.label_kd.Size = new System.Drawing.Size(20, 15);
+			this.label_kd.TabIndex = 5;
+			this.label_kd.Text = "kd";
+			// 
+			// trackBar_kd
+			// 
+			this.trackBar_kd.LargeChange = 10;
+			this.trackBar_kd.Location = new System.Drawing.Point(40, 141);
+			this.trackBar_kd.Maximum = 100;
+			this.trackBar_kd.Name = "trackBar_kd";
+			this.trackBar_kd.Size = new System.Drawing.Size(176, 45);
+			this.trackBar_kd.TabIndex = 4;
+			this.trackBar_kd.Tag = "";
+			this.trackBar_kd.TickFrequency = 20;
+			this.trackBar_kd.Value = 100;
+			this.trackBar_kd.Scroll += new System.EventHandler(this.trackBar_kd_Scroll);
+			// 
+			// label_position
+			// 
+			this.label_position.AutoSize = true;
+			this.label_position.Location = new System.Drawing.Point(6, 81);
+			this.label_position.Name = "label_position";
+			this.label_position.Size = new System.Drawing.Size(56, 15);
+			this.label_position.TabIndex = 3;
+			this.label_position.Text = "Position: ";
+			// 
+			// label_fps
+			// 
+			this.label_fps.AutoSize = true;
+			this.label_fps.Location = new System.Drawing.Point(6, 55);
+			this.label_fps.Name = "label_fps";
+			this.label_fps.Size = new System.Drawing.Size(32, 15);
+			this.label_fps.TabIndex = 2;
+			this.label_fps.Text = "FPS: ";
+			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(62, 57);
+			this.label2.Location = new System.Drawing.Point(63, 28);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(36, 15);
 			this.label2.TabIndex = 1;
@@ -93,7 +230,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(6, 57);
+			this.label1.Location = new System.Drawing.Point(6, 28);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(51, 15);
 			this.label1.TabIndex = 0;
@@ -115,6 +252,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1184, 744);
 			this.Controls.Add(this.tableLayoutPanel_main);
+			this.KeyPreview = true;
 			this.Name = "form_mainWindow";
 			this.Text = "Chess animation";
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.form_mainWindow_KeyDown);
@@ -122,6 +260,9 @@
 			this.tableLayoutPanel_right.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_m)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_ks)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_kd)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_workingArea)).EndInit();
 			this.ResumeLayout(false);
 
@@ -135,5 +276,16 @@
 		private GroupBox groupBox1;
 		private Label label2;
 		private Label label1;
+		private Label label_fps;
+		private Label label_position;
+		private TrackBar trackBar_m;
+		private Label label_mValue;
+		private Label label_m;
+		private TrackBar trackBar_ks;
+		private Label label_ksValue;
+		private Label label_ks;
+		private Label label_kdValue;
+		private Label label_kd;
+		private TrackBar trackBar_kd;
 	}
 }

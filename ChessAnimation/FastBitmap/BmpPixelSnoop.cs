@@ -181,7 +181,8 @@ unsafe class BmpPixelSnoop : IDisposable
 	{
 		// Better do the 'decent thing' and bounds check x & y
 		if (x < 0 || y < 0 || x >= width || y >= height)
-			throw new ArgumentException("x or y coordinate is out of range");
+			return;
+			//throw new ArgumentException("x or y coordinate is out of range");
 
 		// Get a pointer to this pixel
 		byte* p = PixelPointer(x, y);
