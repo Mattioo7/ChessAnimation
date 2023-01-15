@@ -114,7 +114,8 @@ namespace ChessAnimation
 
 
 			// loading objects
-			string obj1 = "koniksberg.obj";
+			string obj1 = "FullTorusNormalized.obj";
+			//string obj1 = "koniksberg.obj";
 			Loaders.loadObject(projectData, obj1);
 
 			//string obj2 = "FullTorusNormalized.obj";
@@ -124,7 +125,7 @@ namespace ChessAnimation
 			// sun
 			projectData.sunPositions = new List<Vector3>
 			{
-				/*new Vector3(0, 0, -900),*/
+				new Vector3(0, 0, -900),
 				new Vector3(100, 0, -600)
 			};
 
@@ -223,6 +224,9 @@ namespace ChessAnimation
 					this.projectData.fog = !this.projectData.fog;
 					Debug.WriteLine("Fog: " + projectData.fog);
 					game();
+					break;
+				case Keys.D:
+					this.projectData.debug = !this.projectData.debug;
 					break;
 			}
 

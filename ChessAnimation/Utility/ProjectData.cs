@@ -28,6 +28,8 @@ namespace ChessAnimation.Utility
 		public float[,] zBuffer { get; set; }
 
 		// camera
+		public Matrix4x4 V { get; set; }
+		public Matrix4x4 P { get; set; }
 		public CameraMode cameraMode { get; set; } = CameraMode.Static;
 		public int trackedObject { get; set; }
 		public Vector3 cameraPosition { get; set; } = new Vector3(0, 0, 12);
@@ -38,9 +40,14 @@ namespace ChessAnimation.Utility
 		public Vector3 position { get; set; } = new Vector3(-4, 0, 0);
 
 		// sun
-		public Vector3 sunPosition { get; set; } = new Vector3(0, 0, -900);
-		public List<Vector3> sunPositions { get; set; } 
-		public Color sunColor { get; set; } = Color.White;
+		public Vector3 spotlightPosition { get; set; } = new Vector3(0, 5, -20);
+		public Vector3 spotlightPositionCopy { get; set; }
+		public Vector3 spotlightDirection { get; set; } = new Vector3(0, -5, 20);
+		public Vector3 spotlightDirectionCopy { get; set; }
+		
+		public List<Vector3> sunPositions { get; set; }
+		public Color sunColor { get; set; } = Color.FromArgb(100, 100, 100);
+		public Color spotlightColor { get; set; } = Color.FromArgb(200, 10, 10);
 
 		// fog
 		public bool fog { get; set; } = false;
@@ -51,5 +58,7 @@ namespace ChessAnimation.Utility
 		public bool interpolateColor { get; set; } = true;
 		public bool drawOutline { get; set; } = true;
 		public bool fillColor { get; set; } = false;
+		public bool debug { get; set; } = false;
+		
 	}
 }

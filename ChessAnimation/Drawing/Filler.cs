@@ -56,9 +56,7 @@ namespace ChessAnimation.Drawing
 				int a = 0;
 			}
 
-
 			//projectData.workingArea.Refresh();
-
 			return;
 		}
 
@@ -81,7 +79,7 @@ namespace ChessAnimation.Drawing
 				return;
 			}*/
 
-			if (ColorGenerator.backFaceCulling(polygon, projectData.cameraPosition))
+			if (ColorGenerator.backFaceCulling(polygon, projectData.cameraPosition, projectData.debug))
 			{
 				return;
 			}
