@@ -1,11 +1,14 @@
 ﻿using ChessAnimation.Models;
 using ChessAnimation.Utility;
+using ObjLoader.Loader.Data.VertexData;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Vertex = ChessAnimation.Models.Vertex;
 
 namespace ChessAnimation.Drawing
 {
@@ -17,50 +20,78 @@ namespace ChessAnimation.Drawing
 			float ks = projectData.ks;
 			int m = projectData.m;
 			Color sun = projectData.sunColor;
-			Vector3 sunPosition = new Vector3(projectData.sunPosition.X, projectData.sunPosition.Y, projectData.sunPosition.Z );
 			Color objColor = projectData.objColor; // zawsze będzie ustawiony, bo domyślny
 
 			foreach (Vertex vertex in polygon.verticesCopy)
 			{
-				/*if (projectData.useTexture)
+				float RR = 0;
+				float GG = 0;
+				float BB = 0;
+				
+				foreach (Vector3 sunPosition in projectData.sunPositions)
 				{
-					int x = (int)vertex.x;
-					int y = (int)vertex.y;
-
-					if (vertex.x > texture.Width)
+					/*if (projectData.useTexture)
 					{
-						//x = texture.Width - 1;
-						// z domyślnego
-					}
-					else if (vertex.y > texture.Height)
+						int x = (int)vertex.x;
+						int y = (int)vertex.y;
+
+						if (vertex.x > texture.Width)
+						{
+							//x = texture.Width - 1;
+							// z domyślnego
+						}
+						else if (vertex.y > texture.Height)
+						{
+							//y = texture.Height - 1;
+							// z domyślnego
+						}
+						else
+						{
+							objColor = texture.GetPixel(x, y);
+						}
+					}*/
+
+					Vector3 sunVector = sunPosition - vertex;
+					Vector3 L = Vector3.Normalize(sunVector);
+
+					Vector3 N = Vector3.Normalize(new Vector3(vertex.normal.X, vertex.normal.Y, vertex.normal.Z));
+					Vector3 rVec = 2 * dot(N, L) * N - L;
+					Vector3 R = Vector3.Normalize(rVec);
+
+					Vector3 V = new Vector3(0, 0, 1);
+
+					RR += toUnity(sun.R) * toUnity(objColor.R) * (kd * cosine(N, L) + ks * MathF.Pow(cosine(V, R), m));
+					GG += toUnity(sun.G) * toUnity(objColor.G) * (kd * cosine(N, L) + ks * MathF.Pow(cosine(V, R), m));
+					BB += toUnity(sun.B) * toUnity(objColor.B) * (kd * cosine(N, L) + ks * MathF.Pow(cosine(V, R), m));
+				}
+
+				// spotlight
+				if (false /*projectData.useSpotlight*/)
+				{
+					Vector3 sunVector = projectData.spotlightPosition - vertex;
+					Vector3 L = Vector3.Normalize(sunVector);
+
+					Vector3 D = Vector3.Normalize(new Vector3(projectData.spotlightDirection.X, projectData.spotlightDirection.Y, projectData.spotlightDirection.Z));
+
+					float cosineVal = cosine(-D, L);
+
+					if (projectData.debug)
 					{
-						//y = texture.Height - 1;
-						// z domyślnego
+						Debug.WriteLine(cosineVal);
 					}
-					else
-					{
-						objColor = texture.GetPixel(x, y);
-					}
-				}*/
 
-				Vector3 sunVector = sunPosition - vertex;
-				Vector3 L = Vector3.Normalize(sunVector);
-
-				Vector3 N = Vector3.Normalize(new Vector3(vertex.normal.X, vertex.normal.Y, vertex.normal.Z));
-				Vector3 rVec = 2 * dot(N, L) * N - L;
-				Vector3 R = Vector3.Normalize(rVec);
-
-				Vector3 V = new Vector3(0, 0, 1);
-
-				float RR = toUnity(sun.R) * toUnity(objColor.R) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosine(V, R), m));
-				float GG = toUnity(sun.G) * toUnity(objColor.G) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosine(V, R), m));
-				float BB = toUnity(sun.B) * toUnity(objColor.B) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosine(V, R), m));
+					GG += toUnity(projectData.spotlightColor.G) * MathF.Pow(cosineVal, 10);
+					BB += toUnity(projectData.spotlightColor.B) * MathF.Pow(cosineVal, 10);
+					RR += toUnity(projectData.spotlightColor.R) * MathF.Pow(cosineVal, 10);
+				}
 
 				vertex.R = fromUnity(RR); if (vertex.R > 255) vertex.R = 255; if (vertex.R < 0) vertex.R = 0;
 				vertex.G = fromUnity(GG); if (vertex.G > 255) vertex.G = 255; if (vertex.G < 0) vertex.G = 0;
 				vertex.B = fromUnity(BB); if (vertex.B > 255) vertex.B = 255; if (vertex.B < 0) vertex.B = 0;
 				vertex.A = 255;
 			}
+
+			
 		}
 
 		public static void setVerticesColorsTest(Polygon polygon)
@@ -125,41 +156,61 @@ namespace ChessAnimation.Drawing
 			float ks = projectData.ks;
 			int m = projectData.m;
 			Color sun = projectData.sunColor;
-			Vector3 sunPosition = new Vector3(projectData.sunPosition.X, projectData.sunPosition.Y, projectData.sunPosition.Z);
 			Color objColor = projectData.objColor; // zawsze będzie ustawiony, bo domyślny
 
-			/*if (projectData.useTexture)
-			{
-				if (x > texture.Width)
-				{
-					//x = texture.Width - 1;
-					// z domyślnego
-				}
-				else if (y > texture.Height)
-				{
-					//y = texture.Height - 1;
-					// z domyślnego
-				}
-				else
-				{
-					objColor = texture.GetPixel(x, y);
-				}
-			}*/
-
+			float RR = 0;
+			float GG = 0;
+			float BB = 0;
 			Vector3 vertex = new Vector3(x, y, interpolateZ(polygon, x, y));
 
-			Vector3 sunVector = sunPosition - vertex;
-			Vector3 L = Vector3.Normalize(sunVector);
+			foreach (Vector3 sunPosition in projectData.sunPositions)
+			{
 
-			Vector3 N = Vector3.Normalize(normal);
-			Vector3 rVec = 2 * dot(N, L) * N - L;
-			Vector3 R = Vector3.Normalize(rVec);
+				/*if (projectData.useTexture)
+				{
+					if (x > texture.Width)
+					{
+						//x = texture.Width - 1;
+						// z domyślnego
+					}
+					else if (y > texture.Height)
+					{
+						//y = texture.Height - 1;
+						// z domyślnego
+					}
+					else
+					{
+						objColor = texture.GetPixel(x, y);
+					}
+				}*/
 
-			Vector3 V = new Vector3(0, 0, 1);
+				Vector3 sunVector = sunPosition - vertex;
+				Vector3 L = Vector3.Normalize(sunVector);
 
-			float RR = toUnity(sun.R) * toUnity(objColor.R) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosine(V, R), m));
-			float GG = toUnity(sun.G) * toUnity(objColor.G) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosine(V, R), m));
-			float BB = toUnity(sun.B) * toUnity(objColor.B) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosine(V, R), m));
+				Vector3 N = Vector3.Normalize(normal);
+				Vector3 rVec = 2 * dot(N, L) * N - L;
+				Vector3 R = Vector3.Normalize(rVec);
+
+				Vector3 V = new Vector3(0, 0, 1);
+				float cosineVal = cosine(V, R);
+
+				RR += toUnity(sun.R) * toUnity(objColor.R) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosineVal, m));
+				GG += toUnity(sun.G) * toUnity(objColor.G) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosineVal, m));
+				BB += toUnity(sun.B) * toUnity(objColor.B) * (kd * cosine(N, L) + ks * (float)Math.Pow(cosineVal, m));
+			}
+
+			if (false /*projectData.useSpotlight*/)
+			{
+				Vector3 vertex = new Vector3(x, y, interpolateZ(polygon, x, y));
+				Vector3 sunVector = projectData.spotlightPosition - vertex;
+				Vector3 L = Vector3.Normalize(sunVector);
+
+				Vector3 D = Vector3.Normalize(new Vector3(projectData.spotlightDirection.X, projectData.spotlightDirection.Y, projectData.spotlightDirection.Z));
+
+				GG += toUnity(projectData.spotlightColor.G) * MathF.Pow(cosine(-D, L), 10);
+				BB += toUnity(projectData.spotlightColor.B) * MathF.Pow(cosine(-D, L), 10);
+				RR += toUnity(projectData.spotlightColor.R) * MathF.Pow(cosine(-D, L), 10);
+			}
 
 			int colorR = fromUnity(RR); if (colorR > 255) colorR = 255; if (colorR < 0) colorR = 0;
 			int colorG = fromUnity(GG); if (colorG > 255) colorG = 255; if (colorG < 0) colorG = 0;
@@ -240,11 +291,16 @@ namespace ChessAnimation.Drawing
 			return (byte)(result);
 		}
 
-		public static bool backFaceCulling(Polygon polygon, Vector3 cameraPosition)
+		public static bool backFaceCulling(Polygon polygon, Vector3 cameraPosition, bool debug)
 		{
 			Vertex v1 = polygon.verticesCopy[0];
 			Vertex v2 = polygon.verticesCopy[1];
 			Vertex v3 = polygon.verticesCopy[2];
+
+			if (debug)
+			{
+				//Debug.WriteLine("Camera pos: " + cameraPosition);
+			}
 
 			Vector3 v1v2 = new Vector3(v2.x - v1.x, v2.y - v1.y, v2.z - v1.z);
 			Vector3 v1v3 = new Vector3(v3.x - v1.x, v3.y - v1.y, v3.z - v1.z);

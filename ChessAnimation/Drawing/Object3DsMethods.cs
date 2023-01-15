@@ -17,34 +17,11 @@ namespace ChessAnimation.Drawing
 			Matrix4x4 S = Matrix4x4.CreateScale(scale);
 			Matrix4x4 R = Matrix4x4.CreateRotationY(angle);
 			Matrix4x4 T = Matrix4x4.CreateTranslation(position);
-			Matrix4x4 V;
+			Matrix4x4 V = projectData.V;
 
 			obj.position = Vector4.Transform(Vector3.Zero, S * R * T);
-
-			if (projectData.cameraMode == CameraMode.Tacking)
-			{
-				Vector3 target = new Vector3(projectData.objects[0].position.X, projectData.objects[0].position.Y, projectData.objects[0].position.Z);
-				V = Matrix4x4.CreateLookAt(projectData.cameraPosition, target, projectData.cameraUpVector);
-			}
-			else if (projectData.cameraMode == CameraMode.Moving)
-			{
-				Vector3 newPosition = new Vector3(projectData.objects[0].position.X, projectData.objects[0].position.Y, projectData.objects[0].position.Z);
-				Vector3 newCameraPosition = projectData.cameraPosition + newPosition;
-				Vector3 newCameraTarget = projectData.cameraTarget + newPosition;
-				V = Matrix4x4.CreateLookAt(newCameraPosition, newCameraTarget, projectData.cameraUpVector);
-			}
-			else
-			{
-				V = Matrix4x4.CreateLookAt(projectData.cameraPosition, projectData.cameraTarget, projectData.cameraUpVector);
-			}
-
-
-
-			float fieldOfView = 90 * MathF.PI / 180;
-			float aspectRatio = (float)projectData.workingArea.Width / (float)projectData.workingArea.Height;
-			float nearPlaneDistance = 1f;
-			float farPlaneDistance = 2f;
-			Matrix4x4 P = Matrix4x4.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
+			
+			Matrix4x4 P = projectData.P;
 
 			/*Matrix4x4 matrix = S * R * V * P;*/
 			Matrix4x4 matrix = S * R * T * V * P;
