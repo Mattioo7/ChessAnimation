@@ -16,71 +16,33 @@ namespace ChessAnimation.Drawing
 	{
 		public static void fillObjects(ProjectData projectData)
 		{
-			Parallel.ForEach(projectData.objects, (object3D) => fillPolygons(projectData, object3D));
+			//Parallel.ForEach(projectData.objects, (object3D) => fillPolygons(projectData, object3D));
 
-			/*foreach (Object3D object3D in projectData.objects)
+			foreach (Object3D object3D in projectData.objects)
 			{
 				fillPolygons(projectData, object3D);
-			}*/
+			}
 		}
 
 		public static void fillPolygons(ProjectData projectData, Object3D object3D)
 		{
-
-			/*if (projectData.useTexture && projectData.useNormalMap)
-			{
-				Parallel.ForEach(projectData.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, projectData.textureSnoop, null, projectData.normalMapSnoop));
-				//foreach (Polygon polygon in projectData.polygons) fillPolygon(polygon, projectData, snoop, texture, null, normalMap);
-			}
-			else if (projectData.useTexture)
-			{
-				Parallel.ForEach(projectData.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, projectData.textureSnoop, null, null));
-				//foreach (Polygon polygon in projectData.polygons) fillPolygon(polygon, projectData, snoop, texture, null, null);
-
-			}
-			else if (projectData.useNormalMap)
-			{
-				Parallel.ForEach(projectData.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, projectData.normalMapSnoop));
-				//foreach (Polygon polygon in projectData.polygons) fillPolygon(polygon, projectData, snoop, null, null, normalMap);
-			}
-			else
-			{
-				Parallel.ForEach(projectData.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, null));
-			}*/
-
-
-			//projectData.workingArea.Refresh();
-			Parallel.ForEach(object3D.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, null));
-			/*foreach (Polygon polygon in object3D.polygons)
+			
+			//Parallel.ForEach(object3D.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, null));
+			foreach (Polygon polygon in object3D.polygons)
 			{
 				fillPolygon(polygon, projectData, projectData.snoop, null, null, null);
 
+
 				//projectData.workingArea.Refresh();
 				int a = 0;
-			}*/
+			}
 
-			//projectData.workingArea.Refresh();
+
 			return;
 		}
 
-		/*public static void fillPolygons2(ProjectData projectData, int i, Color? polyColor = null)
-		{
-			fillPolygon(projectData.polygons[i], projectData, projectData.snoop, null, polyColor, null);
-		}*/
-
 		public static void fillPolygon(Polygon polygon, ProjectData projectData, BmpPixelSnoop bitmap, BmpPixelSnoop? texture, Color? objectColor = null, BmpPixelSnoop? normalMap = null)
 		{
-			// back face culling
-			/*Vector3 vectorToUs = projectData.cameraPosition - polygon.verticesCopy[0].position;
-			vectorToUs = Vector3.Normalize(vectorToUs);
-			Vector3 faceNormal = new Vector3(polygon.verticesCopy[0].normal.X, polygon.verticesCopy[0].normal.Y, polygon.verticesCopy[0].normal.Z);
-			faceNormal = Vector3.Normalize(faceNormal);
-			float dot = Vector3.Dot(vectorToUs, faceNormal);
-			if (dot <= 0)
-			{
-				int bb = 0;
-				return;
-			}*/
 
 			if (ColorGenerator.backFaceCulling(polygon, projectData.cameraPosition, projectData.debug))
 			{
@@ -170,7 +132,7 @@ namespace ChessAnimation.Drawing
 							{
 								continue;
 							}
-							if (projectData.zBuffer[x, y] < ColorGenerator.interpolateZ(polygon, x, y))
+							if (projectData.zBuffer[x, y] > ColorGenerator.interpolateZ(polygon, x, y))
 							{
 								continue;
 							}
@@ -226,17 +188,22 @@ namespace ChessAnimation.Drawing
 							
 							//Debug.WriteLine("z: " + z);
 
-							
-							
 							projectData.zBuffer[x, y] = z;
-							bitmap.SetPixel(x, y, color);
 
-							/*if (projectData.zBuffer[x, y] >= ColorGenerator.interpolateZ(polygon, x, y))
+							/*if (color.R < 10 || color.G < 10 || color.B < 10)
 							{
-								projectData.zBuffer[x, y] = ColorGenerator.interpolateZ(polygon, x, y);
+								bitmap.SetPixel(x, y, Color.LightGray);
+							}
+							else
+							{
 								bitmap.SetPixel(x, y, color);
 							}*/
-							//bitmap.SetPixel(x, y, color);
+
+							bitmap.SetPixel(x, y, color);
+
+							//bitmap.SetPixel(x, y, Color.Green);
+
+
 						}
 					}
 
@@ -252,7 +219,7 @@ namespace ChessAnimation.Drawing
 
 				}
 			}
-		}
+		} // fillPolygon
 	}
 }
 

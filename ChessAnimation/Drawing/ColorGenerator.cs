@@ -22,7 +22,7 @@ namespace ChessAnimation.Drawing
 			Color sun = projectData.sunColor;
 			Color objColor = projectData.objColor; // zawsze będzie ustawiony, bo domyślny
 
-			foreach (Vertex vertex in polygon.verticesCopy)
+			foreach (Vertex vertex in polygon.verticesInWorld)
 			{
 				float RR = 0;
 				float GG = 0;
@@ -123,9 +123,9 @@ namespace ChessAnimation.Drawing
 
 		public static Color getAverageColor(Polygon polygon)
 		{
-			Vertex v1 = polygon.verticesCopy[0];
-			Vertex v2 = polygon.verticesCopy[1];
-			Vertex v3 = polygon.verticesCopy[2];
+			Vertex v1 = polygon.verticesInWorld[0];
+			Vertex v2 = polygon.verticesInWorld[1];
+			Vertex v3 = polygon.verticesInWorld[2];
 
 			int R = v1.R + v2.R + v3.R;
 			int G = v1.G + v2.G + v3.G;
@@ -136,9 +136,9 @@ namespace ChessAnimation.Drawing
 
 		public static Color generatePixelColor(Polygon polygon, int x, int y)
 		{
-			Vertex v1 = polygon.verticesCopy[0];
-			Vertex v2 = polygon.verticesCopy[1];
-			Vertex v3 = polygon.verticesCopy[2];
+			Vertex v1 = polygon.verticesInWorld[0];
+			Vertex v2 = polygon.verticesInWorld[1];
+			Vertex v3 = polygon.verticesInWorld[2];
 
 			float denominator = polygon.denominator;
 			float W_v1 = ((v2.y - v3.y) * (x - v3.x) + (v3.x - v2.x) * (y - v3.y)) / denominator;
@@ -241,9 +241,9 @@ namespace ChessAnimation.Drawing
 			//Stopwatch timing = new Stopwatch();
 			//timing.Start();
 
-			Vertex v1 = polygon.verticesCopy[0];
-			Vertex v2 = polygon.verticesCopy[1];
-			Vertex v3 = polygon.verticesCopy[2];
+			Vertex v1 = polygon.verticesInWorld[0];
+			Vertex v2 = polygon.verticesInWorld[1];
+			Vertex v3 = polygon.verticesInWorld[2];
 
 			float denominator = polygon.denominator;
 			float W_v1 = ((v2.y - v3.y) * (x - v3.x) + (v3.x - v2.x) * (y - v3.y)) / denominator;
@@ -268,9 +268,9 @@ namespace ChessAnimation.Drawing
 			Vertex v2 = polygon.vertices[1];
 			Vertex v3 = polygon.vertices[2];*/
 
-			Vertex v1 = polygon.verticesCopy[0];
-			Vertex v2 = polygon.verticesCopy[1];
-			Vertex v3 = polygon.verticesCopy[2];
+			Vertex v1 = polygon.verticesInWorld[0];
+			Vertex v2 = polygon.verticesInWorld[1];
+			Vertex v3 = polygon.verticesInWorld[2];
 
 			float denominator = polygon.denominator;
 			float W_v1 = ((v2.y - v3.y) * (x - v3.x) + (v3.x - v2.x) * (y - v3.y)) / denominator;

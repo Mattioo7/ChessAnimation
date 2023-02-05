@@ -80,7 +80,7 @@ namespace ChessAnimation
 			{
 				for (int j = 0; j < projectData.zBuffer.GetLength(1); j++)
 				{
-					projectData.zBuffer[i, j] = float.MaxValue;
+					projectData.zBuffer[i, j] = float.MinValue;
 				}
 			}
 			foreach (Object3D obj in projectData.objects)
@@ -145,7 +145,7 @@ namespace ChessAnimation
 			{
 				for (int j = 0; j < projectData.zBuffer.GetLength(1); j++)
 				{
-					projectData.zBuffer[i, j] = float.MaxValue;
+					projectData.zBuffer[i, j] = float.MinValue;
 				}
 			}
 
@@ -172,8 +172,8 @@ namespace ChessAnimation
 			// sun
 			projectData.sunPositions = new List<Vector3>
 			{
-				new Vector3(0, 0, -900),
-				new Vector3(100, 0, -600)
+				new Vector3(0, 0, 900)/*,
+				new Vector3(100, 0, -600)*/
 			};
 
 			// timer
