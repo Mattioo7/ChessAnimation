@@ -27,60 +27,18 @@ namespace ChessAnimation.Drawing
 		public static void fillPolygons(ProjectData projectData, Object3D object3D)
 		{
 
-			/*if (projectData.useTexture && projectData.useNormalMap)
-			{
-				Parallel.ForEach(projectData.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, projectData.textureSnoop, null, projectData.normalMapSnoop));
-				//foreach (Polygon polygon in projectData.polygons) fillPolygon(polygon, projectData, snoop, texture, null, normalMap);
-			}
-			else if (projectData.useTexture)
-			{
-				Parallel.ForEach(projectData.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, projectData.textureSnoop, null, null));
-				//foreach (Polygon polygon in projectData.polygons) fillPolygon(polygon, projectData, snoop, texture, null, null);
-
-			}
-			else if (projectData.useNormalMap)
-			{
-				Parallel.ForEach(projectData.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, projectData.normalMapSnoop));
-				//foreach (Polygon polygon in projectData.polygons) fillPolygon(polygon, projectData, snoop, null, null, normalMap);
-			}
-			else
-			{
-				Parallel.ForEach(projectData.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, null));
-			}*/
-
-
-			//projectData.workingArea.Refresh();
 			Parallel.ForEach(object3D.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, null));
 			/*foreach (Polygon polygon in object3D.polygons)
 			{
 				fillPolygon(polygon, projectData, projectData.snoop, null, null, null);
 
-				//projectData.workingArea.Refresh();
-				int a = 0;
 			}*/
 
-			//projectData.workingArea.Refresh();
 			return;
 		}
 
-		/*public static void fillPolygons2(ProjectData projectData, int i, Color? polyColor = null)
-		{
-			fillPolygon(projectData.polygons[i], projectData, projectData.snoop, null, polyColor, null);
-		}*/
-
 		public static void fillPolygon(Polygon polygon, ProjectData projectData, BmpPixelSnoop bitmap, BmpPixelSnoop? texture, Color? objectColor = null, BmpPixelSnoop? normalMap = null)
 		{
-			// back face culling
-			/*Vector3 vectorToUs = projectData.cameraPosition - polygon.verticesCopy[0].position;
-			vectorToUs = Vector3.Normalize(vectorToUs);
-			Vector3 faceNormal = new Vector3(polygon.verticesCopy[0].normal.X, polygon.verticesCopy[0].normal.Y, polygon.verticesCopy[0].normal.Z);
-			faceNormal = Vector3.Normalize(faceNormal);
-			float dot = Vector3.Dot(vectorToUs, faceNormal);
-			if (dot <= 0)
-			{
-				int bb = 0;
-				return;
-			}*/
 
 			if (ColorGenerator.backFaceCulling(polygon, projectData.cameraPosition, projectData.debug))
 			{
@@ -91,7 +49,7 @@ namespace ChessAnimation.Drawing
 
 			List<Vertex> vertices = polygon.verticesCopy;
 
-			if (projectData.colorMode == ColorMode.Gouraud || projectData.colorMode == ColorMode.Static)
+			if (projectData.colorMode == ColorMode.Gouraud || projectData.colorMode == ColorMode.Constant)
 			{
 				ColorGenerator.setVerticesColors(polygon, projectData, texture);
 			}
@@ -188,7 +146,7 @@ namespace ChessAnimation.Drawing
 								Vector3 normal = ColorGenerator.interpolateNormal(polygon, x, y);
 								color = ColorGenerator.generatePixelColorFromNormalVector(polygon, projectData, x, y, normal, texture);
 							}
-							else if (projectData.colorMode == ColorMode.Static)
+							else if (projectData.colorMode == ColorMode.Constant)
 							{
 								color = ColorGenerator.getAverageColor(polygon);
 							}
@@ -214,29 +172,13 @@ namespace ChessAnimation.Drawing
 									fogRation = (z - projectData.fogStart) / (projectData.fogEnd - projectData.fogStart);
 								}
 								
-								/*if (fogRation >= 0.4f)
-								{
-									fogRation = 0.4f;
-								}*/
 								float fog = 255 * fogRation;
-								//Debug.WriteLine("FogRation: " + fogRation);
 								color = Color.FromArgb(Math.Clamp((int)(color.R + fog), 0, 255), Math.Clamp((int)(color.G + fog), 0, 255), Math.Clamp((int)(color.B + fog), 0, 255));
-								//color = Color.FromArgb(Math.Clamp((int)(color.R + 100), 0, 255), Math.Clamp((int)(color.G + 100), 0, 255), Math.Clamp((int)(color.B + 100), 0, 255));
 							}
-							
-							//Debug.WriteLine("z: " + z);
-
-							
-							
+											
 							projectData.zBuffer[x, y] = z;
 							bitmap.SetPixel(x, y, color);
 
-							/*if (projectData.zBuffer[x, y] >= ColorGenerator.interpolateZ(polygon, x, y))
-							{
-								projectData.zBuffer[x, y] = ColorGenerator.interpolateZ(polygon, x, y);
-								bitmap.SetPixel(x, y, color);
-							}*/
-							//bitmap.SetPixel(x, y, color);
 						}
 					}
 

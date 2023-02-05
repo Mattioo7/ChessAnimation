@@ -20,7 +20,7 @@ namespace ChessAnimation.Utility
 		public float kd { get; set; } = 1f;
 		public float ks { get; set; } = 0.5f;
 		public int m { get; set; } = 20;
-		public Color objColor { get; set; } = Color.LightGreen;
+		public Color objColor { get; set; } = Color.SandyBrown;
 
 		// bitmap
 		public PictureBox workingArea { get; set; }
@@ -56,9 +56,9 @@ namespace ChessAnimation.Utility
 
 		// booleans
 		public bool interpolateColor { get; set; } = true;
-		public ColorMode colorMode { get; set; } = ColorMode.Gouraud;
-		public bool drawOutline { get; set; } = true;
-		public bool fillColor { get; set; } = false;
+		public ColorMode colorMode { get; set; } = ColorMode.Constant;
+		public bool drawOutline { get; set; } = false;
+		public bool fillColor { get; set; } = true;
 		public bool debug { get; set; } = false;
 		
 	}

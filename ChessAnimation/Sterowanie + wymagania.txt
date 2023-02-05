@@ -1,6 +1,6 @@
 ﻿Klawiszologia:
 
-F1: kamera obesrwująca scenę
+F1: kamera obserwująca scenę
 F2: kamera śledząca ruchomy obiekt
 F3: kamera związana z rychomym obiektem
 

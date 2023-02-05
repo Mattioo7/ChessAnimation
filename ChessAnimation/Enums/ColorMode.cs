@@ -8,7 +8,7 @@ namespace ChessAnimation.Enums
 {
 	internal enum ColorMode
 	{
-		Static,
+		Constant,
 		Gouraud,
 		Phong
 	}

@@ -57,4 +57,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label1.Text" xml:space="preserve">
+    <value>F1: kamera obserwująca scenę
+F2: kamera śledząca ruchomy obiekt
+F3: kamera związana z rychomym obiektem
+
+Q: cieniowanie stałe
+W: cieniowanie Gourauda
+E: cieniowanie Phonga
+
+Z: przełączenie rysowania siatki 
+X: przełączenie wypełniania wielokątów
+C: przełączenie mgły
+
+Spacja: Zatrzymanie animacji
+</value>
+  </data>
 </root>

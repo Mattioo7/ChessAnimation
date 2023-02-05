@@ -30,26 +30,6 @@ namespace ChessAnimation.Drawing
 				
 				foreach (Vector3 sunPosition in projectData.sunPositions)
 				{
-					/*if (projectData.useTexture)
-					{
-						int x = (int)vertex.x;
-						int y = (int)vertex.y;
-
-						if (vertex.x > texture.Width)
-						{
-							//x = texture.Width - 1;
-							// z domyślnego
-						}
-						else if (vertex.y > texture.Height)
-						{
-							//y = texture.Height - 1;
-							// z domyślnego
-						}
-						else
-						{
-							objColor = texture.GetPixel(x, y);
-						}
-					}*/
 
 					Vector3 sunVector = sunPosition - vertex;
 					Vector3 L = Vector3.Normalize(sunVector);
@@ -66,7 +46,7 @@ namespace ChessAnimation.Drawing
 				}
 
 				// spotlight
-				if (false /*projectData.useSpotlight*/)
+				if (false)
 				{
 					Vector3 sunVector = projectData.spotlightPosition - vertex;
 					Vector3 L = Vector3.Normalize(sunVector);
@@ -264,10 +244,6 @@ namespace ChessAnimation.Drawing
 
 		public static float interpolateZ(Polygon polygon, int x, int y)
 		{
-			/*Vertex v1 = polygon.vertices[0];
-			Vertex v2 = polygon.vertices[1];
-			Vertex v3 = polygon.vertices[2];*/
-
 			Vertex v1 = polygon.verticesCopy[0];
 			Vertex v2 = polygon.verticesCopy[1];
 			Vertex v3 = polygon.verticesCopy[2];
