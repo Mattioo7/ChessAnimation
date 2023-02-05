@@ -13,6 +13,7 @@ namespace ChessAnimation.Models
 	{
 		public List<Vertex> vertices { get; set; }
 		public List<Vertex> verticesCopy { get; set; }
+		public List<Vertex> verticesInWorld { get; set; }
 		
 
 		public float denominator { get; set; }
@@ -23,6 +24,7 @@ namespace ChessAnimation.Models
 		{
 			vertices = new List<Vertex>();
 			verticesCopy = new List<Vertex>();
+			verticesInWorld = new List<Vertex>();
 		}
 
 		public Polygon(List<Vertex> vertices)
@@ -31,9 +33,11 @@ namespace ChessAnimation.Models
 
 			// assign to verticesCopy deep copy of vertices
 			verticesCopy = new List<Vertex>();
+			verticesInWorld = new List<Vertex>();
 			foreach (Vertex vertex in vertices)
 			{
 				verticesCopy.Add(new Vertex(vertex));
+				verticesInWorld.Add(new Vertex(vertex));
 			}
 		}
 
@@ -46,9 +50,11 @@ namespace ChessAnimation.Models
 			}
 
 			verticesCopy = new List<Vertex>();
+			verticesInWorld = new List<Vertex>();
 			foreach (Vertex vertex in polygon.verticesCopy)
 			{
 				verticesCopy.Add(new Vertex(vertex));
+				verticesInWorld.Add(new Vertex(vertex));
 			}
 		}
 
@@ -70,9 +76,11 @@ namespace ChessAnimation.Models
 
 					Vertex newVertex = new Vertex(vertex, normal);
 					Vertex newVertexCopy = new Vertex(vertex, normal);
+					Vertex newVertexCopyInWorld = new Vertex(vertex, normal);
 
 					polygon.vertices.Add(newVertex);
 					polygon.verticesCopy.Add(newVertexCopy);
+					polygon.verticesInWorld.Add(newVertexCopyInWorld);
 				}
 
 				polygon.nr = i;

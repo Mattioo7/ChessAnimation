@@ -1,4 +1,5 @@
-﻿using ChessAnimation.Models;
+﻿using ChessAnimation.Enums;
+using ChessAnimation.Models;
 using ChessAnimation.Utility;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace ChessAnimation.Drawing
 	{
 		public static void fillObjects(ProjectData projectData)
 		{
-			foreach (Object3D object3D in projectData.objects)
+			Parallel.ForEach(projectData.objects, (object3D) => fillPolygons(projectData, object3D));
+
+			/*foreach (Object3D object3D in projectData.objects)
 			{
 				fillPolygons(projectData, object3D);
-			}
+			}*/
 		}
 
 		public static void fillPolygons(ProjectData projectData, Object3D object3D)
@@ -47,14 +50,14 @@ namespace ChessAnimation.Drawing
 
 
 			//projectData.workingArea.Refresh();
-			//Parallel.ForEach(object3D.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, null));
-			foreach (Polygon polygon in object3D.polygons)
+			Parallel.ForEach(object3D.polygons, polygon => fillPolygon(polygon, projectData, projectData.snoop, null, null, null));
+			/*foreach (Polygon polygon in object3D.polygons)
 			{
 				fillPolygon(polygon, projectData, projectData.snoop, null, null, null);
 
 				//projectData.workingArea.Refresh();
 				int a = 0;
-			}
+			}*/
 
 			//projectData.workingArea.Refresh();
 			return;
@@ -88,7 +91,7 @@ namespace ChessAnimation.Drawing
 
 			List<Vertex> vertices = polygon.verticesCopy;
 
-			if (projectData.interpolateColor)
+			if (projectData.colorMode == ColorMode.Gouraud || projectData.colorMode == ColorMode.Static)
 			{
 				ColorGenerator.setVerticesColors(polygon, projectData, texture);
 			}
@@ -174,16 +177,20 @@ namespace ChessAnimation.Drawing
 
 							Color color = projectData.objColor;
 
-							if (projectData.interpolateColor)
+							if (projectData.colorMode == ColorMode.Gouraud)
 							{
 								// interpolacja koloru 
 								color = ColorGenerator.generatePixelColor(polygon, x, y);
 							}
-							else
+							else if (projectData.colorMode == ColorMode.Phong)
 							{
 								// interpolacja wektora
 								Vector3 normal = ColorGenerator.interpolateNormal(polygon, x, y);
 								color = ColorGenerator.generatePixelColorFromNormalVector(polygon, projectData, x, y, normal, texture);
+							}
+							else if (projectData.colorMode == ColorMode.Static)
+							{
+								color = ColorGenerator.getAverageColor(polygon);
 							}
 
 							// debugowanie
@@ -206,16 +213,20 @@ namespace ChessAnimation.Drawing
 								{
 									fogRation = (z - projectData.fogStart) / (projectData.fogEnd - projectData.fogStart);
 								}
-								if (fogRation >= 0.3f)
+								
+								/*if (fogRation >= 0.4f)
 								{
-									fogRation = 0.3f;
-								}
+									fogRation = 0.4f;
+								}*/
+								float fog = 255 * fogRation;
 								//Debug.WriteLine("FogRation: " + fogRation);
-								color = Color.FromArgb(Math.Clamp((int)(color.R + 255 * fogRation), 0, 255), Math.Clamp((int)(color.G + 255 * fogRation), 0, 255), Math.Clamp((int)(color.B + 255 * fogRation), 0, 255));
+								color = Color.FromArgb(Math.Clamp((int)(color.R + fog), 0, 255), Math.Clamp((int)(color.G + fog), 0, 255), Math.Clamp((int)(color.B + fog), 0, 255));
 								//color = Color.FromArgb(Math.Clamp((int)(color.R + 100), 0, 255), Math.Clamp((int)(color.G + 100), 0, 255), Math.Clamp((int)(color.B + 100), 0, 255));
 							}
 							
 							//Debug.WriteLine("z: " + z);
+
+							
 							
 							projectData.zBuffer[x, y] = z;
 							bitmap.SetPixel(x, y, color);

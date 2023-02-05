@@ -1,0 +1,24 @@
+﻿Klawiszologia:
+
+F1: kamera obesrwująca scenę
+F2: kamera śledząca ruchomy obiekt
+F3: kamera związana z rychomym obiektem
+
+Q: cieniowanie stałe
+W: cieniowanie Gourauda
+E: cieniowanie Phonga
+
+Z: przełączenie rysowania siatki 
+X: przełączenie wypełniania wielokątów
+C: przełączenie mgły
+
+Spacja: Zatrzymanie animacji
+
+Zaimplementowano:
+- statyczne oraz poruszające się obiekty
+- 3 kamery
+- 2 stałe punktowe źródła światła
+- 3 sposoby cieniowania
+- z-bufor 
+- backface culling
+- mgła

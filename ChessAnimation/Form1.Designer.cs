@@ -44,6 +44,13 @@
 			this.label_fps = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.trackBar_z = new System.Windows.Forms.TrackBar();
+			this.trackBar_y = new System.Windows.Forms.TrackBar();
+			this.trackBar_x = new System.Windows.Forms.TrackBar();
+			this.label_z = new System.Windows.Forms.Label();
+			this.label_y = new System.Windows.Forms.Label();
+			this.label_x = new System.Windows.Forms.Label();
 			this.pictureBox_workingArea = new System.Windows.Forms.PictureBox();
 			this.tableLayoutPanel_main.SuspendLayout();
 			this.tableLayoutPanel_right.SuspendLayout();
@@ -51,6 +58,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_m)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_ks)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_kd)).BeginInit();
+			this.groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_z)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_y)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_x)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_workingArea)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -74,6 +85,7 @@
 			this.tableLayoutPanel_right.ColumnCount = 1;
 			this.tableLayoutPanel_right.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel_right.Controls.Add(this.groupBox1, 0, 0);
+			this.tableLayoutPanel_right.Controls.Add(this.groupBox2, 0, 1);
 			this.tableLayoutPanel_right.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel_right.Location = new System.Drawing.Point(937, 3);
 			this.tableLayoutPanel_right.Name = "tableLayoutPanel_right";
@@ -236,6 +248,88 @@
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Camera:";
 			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.trackBar_z);
+			this.groupBox2.Controls.Add(this.trackBar_y);
+			this.groupBox2.Controls.Add(this.trackBar_x);
+			this.groupBox2.Controls.Add(this.label_z);
+			this.groupBox2.Controls.Add(this.label_y);
+			this.groupBox2.Controls.Add(this.label_x);
+			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox2.Location = new System.Drawing.Point(3, 372);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(238, 363);
+			this.groupBox2.TabIndex = 1;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "groupBox2";
+			// 
+			// trackBar_z
+			// 
+			this.trackBar_z.LargeChange = 10;
+			this.trackBar_z.Location = new System.Drawing.Point(40, 141);
+			this.trackBar_z.Maximum = 100;
+			this.trackBar_z.Name = "trackBar_z";
+			this.trackBar_z.Size = new System.Drawing.Size(176, 45);
+			this.trackBar_z.TabIndex = 8;
+			this.trackBar_z.Tag = "";
+			this.trackBar_z.TickFrequency = 20;
+			this.trackBar_z.Value = 70;
+			this.trackBar_z.Scroll += new System.EventHandler(this.trackBar_z_Scroll);
+			// 
+			// trackBar_y
+			// 
+			this.trackBar_y.LargeChange = 10;
+			this.trackBar_y.Location = new System.Drawing.Point(40, 93);
+			this.trackBar_y.Maximum = 100;
+			this.trackBar_y.Name = "trackBar_y";
+			this.trackBar_y.Size = new System.Drawing.Size(176, 45);
+			this.trackBar_y.TabIndex = 7;
+			this.trackBar_y.Tag = "";
+			this.trackBar_y.TickFrequency = 20;
+			this.trackBar_y.Value = 40;
+			this.trackBar_y.Scroll += new System.EventHandler(this.trackBar_y_Scroll);
+			// 
+			// trackBar_x
+			// 
+			this.trackBar_x.LargeChange = 10;
+			this.trackBar_x.Location = new System.Drawing.Point(40, 42);
+			this.trackBar_x.Maximum = 100;
+			this.trackBar_x.Name = "trackBar_x";
+			this.trackBar_x.Size = new System.Drawing.Size(176, 45);
+			this.trackBar_x.TabIndex = 6;
+			this.trackBar_x.Tag = "";
+			this.trackBar_x.TickFrequency = 20;
+			this.trackBar_x.Value = 50;
+			this.trackBar_x.Scroll += new System.EventHandler(this.trackBar_x_Scroll);
+			// 
+			// label_z
+			// 
+			this.label_z.AutoSize = true;
+			this.label_z.Location = new System.Drawing.Point(6, 141);
+			this.label_z.Name = "label_z";
+			this.label_z.Size = new System.Drawing.Size(19, 15);
+			this.label_z.TabIndex = 5;
+			this.label_z.Text = "20";
+			// 
+			// label_y
+			// 
+			this.label_y.AutoSize = true;
+			this.label_y.Location = new System.Drawing.Point(6, 93);
+			this.label_y.Name = "label_y";
+			this.label_y.Size = new System.Drawing.Size(24, 15);
+			this.label_y.TabIndex = 4;
+			this.label_y.Text = "-10";
+			// 
+			// label_x
+			// 
+			this.label_x.AutoSize = true;
+			this.label_x.Location = new System.Drawing.Point(6, 42);
+			this.label_x.Name = "label_x";
+			this.label_x.Size = new System.Drawing.Size(13, 15);
+			this.label_x.TabIndex = 3;
+			this.label_x.Text = "0";
+			// 
 			// pictureBox_workingArea
 			// 
 			this.pictureBox_workingArea.BackColor = System.Drawing.Color.White;
@@ -263,6 +357,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_m)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_ks)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar_kd)).EndInit();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_z)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_y)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBar_x)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_workingArea)).EndInit();
 			this.ResumeLayout(false);
 
@@ -287,5 +386,12 @@
 		private Label label_kdValue;
 		private Label label_kd;
 		private TrackBar trackBar_kd;
+		private GroupBox groupBox2;
+		private TrackBar trackBar_z;
+		private TrackBar trackBar_y;
+		private TrackBar trackBar_x;
+		private Label label_z;
+		private Label label_y;
+		private Label label_x;
 	}
 }

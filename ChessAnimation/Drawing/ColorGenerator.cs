@@ -121,6 +121,19 @@ namespace ChessAnimation.Drawing
 			}
 		}
 
+		public static Color getAverageColor(Polygon polygon)
+		{
+			Vertex v1 = polygon.verticesCopy[0];
+			Vertex v2 = polygon.verticesCopy[1];
+			Vertex v3 = polygon.verticesCopy[2];
+
+			int R = v1.R + v2.R + v3.R;
+			int G = v1.G + v2.G + v3.G;
+			int B = v1.B + v2.B + v3.B;
+
+			return Color.FromArgb(R / 3, G / 3, B / 3);
+		}
+
 		public static Color generatePixelColor(Polygon polygon, int x, int y)
 		{
 			Vertex v1 = polygon.verticesCopy[0];
@@ -201,7 +214,7 @@ namespace ChessAnimation.Drawing
 
 			if (false /*projectData.useSpotlight*/)
 			{
-				Vector3 vertex = new Vector3(x, y, interpolateZ(polygon, x, y));
+				/*Vector3 vertex = new Vector3(x, y, interpolateZ(polygon, x, y));
 				Vector3 sunVector = projectData.spotlightPosition - vertex;
 				Vector3 L = Vector3.Normalize(sunVector);
 
@@ -209,7 +222,7 @@ namespace ChessAnimation.Drawing
 
 				GG += toUnity(projectData.spotlightColor.G) * MathF.Pow(cosine(-D, L), 10);
 				BB += toUnity(projectData.spotlightColor.B) * MathF.Pow(cosine(-D, L), 10);
-				RR += toUnity(projectData.spotlightColor.R) * MathF.Pow(cosine(-D, L), 10);
+				RR += toUnity(projectData.spotlightColor.R) * MathF.Pow(cosine(-D, L), 10);*/
 			}
 
 			int colorR = fromUnity(RR); if (colorR > 255) colorR = 255; if (colorR < 0) colorR = 0;

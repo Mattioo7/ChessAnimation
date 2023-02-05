@@ -50,17 +50,31 @@ namespace ChessAnimation
 			float farPlaneDistance = 2f;
 			projectData.P = Matrix4x4.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
 
-			Object3DsMethods.calculateObject3D(projectData, projectData.objects[0], 5f, 1f + 2 * projectData.angle, projectData.position);
-			Object3DsMethods.calculateObject3D(projectData, projectData.objects[1], 3f, 1f + 5 * projectData.angle, new Vector3(7, 0, 0));
+			// objects
+			
+			// torus
+			Object3DsMethods.calculateObject3D(projectData, projectData.objects[0], 10f, -1.5f + 2 * projectData.angle, projectData.position);
 
+			// queen
+			Object3DsMethods.calculateObject3D(projectData, projectData.objects[1], 1f, 0.1f + 2 * projectData.angle, new Vector3(10, 0, 0));
 
-			//Object3DsMethods.torus(projectData);
+			// pawn
+			Object3DsMethods.calculateObject3D(projectData, projectData.objects[2], 1f, 0.3f + 7 * projectData.angle, new Vector3(10, 0, -10));
+
+			// rook
+			Object3DsMethods.calculateObject3D(projectData, projectData.objects[3], 1f, 0.5f /*1f + 5 * projectData.angle*/, new Vector3(10, 0, -20));
+
+			// bishop
+			Object3DsMethods.calculateObject3D(projectData, projectData.objects[4], 1f, 0.7f + 2 * projectData.angle, new Vector3(10, 0, -30));
+
+			// knight
+			Object3DsMethods.calculateObject3D(projectData, projectData.objects[5], 1f, 1.5f /*+ 5 * projectData.angle*/, new Vector3(10, 0, 10));
+
 
 			// drawing scene
-
 			using (Graphics g = Graphics.FromImage(projectData.workingArea.Image))
 			{
-				g.Clear(Color.AliceBlue);
+				g.Clear(Color.White);
 			}
 			for (int i = 0; i < projectData.zBuffer.GetLength(0); i++)
 			{
@@ -137,12 +151,23 @@ namespace ChessAnimation
 
 
 			// loading objects
-			string obj1 = "FullTorusNormalized.obj";
-			//string obj1 = "koniksberg.obj";
-			Loaders.loadObject(projectData, obj1);
+			string obj = "FullTorusNormalized.obj";
+			Loaders.loadObject(projectData, obj);
+			
+			obj = "queen.obj";
+			Loaders.loadObject(projectData, obj);
 
-			string obj2 = "Cube.obj";
-			Loaders.loadObject(projectData, obj2);
+			obj = "pawn.obj";
+			Loaders.loadObject(projectData, obj);
+
+			obj = "rook.obj";
+			Loaders.loadObject(projectData, obj);
+
+			obj = "bishop.obj";
+			Loaders.loadObject(projectData, obj);
+
+			obj = "knight.obj";
+			Loaders.loadObject(projectData, obj);
 
 			// sun
 			projectData.sunPositions = new List<Vector3>
@@ -162,62 +187,27 @@ namespace ChessAnimation
 		{
 			switch (e.KeyCode)
 			{
-				case Keys.F2:
+				case Keys.F1:
 					this.projectData.cameraMode = CameraMode.Static;
-					this.projectData.cameraPosition = new Vector3(0, 0, 12);
+					this.projectData.cameraPosition = new Vector3(0, -10, 20);
 					this.projectData.cameraTarget = new Vector3(0, 0, 0);
 					this.label2.Text = "Static";
 					game();
 					break;
-				case Keys.F4:
+				case Keys.F2:
 					this.projectData.cameraMode = CameraMode.Tacking;
 					this.projectData.trackedObject = 0;
-					this.projectData.cameraPosition = new Vector3(0, 0, 12);
+					this.projectData.cameraPosition = new Vector3(0, -10, 20);
 					this.projectData.cameraTarget = new Vector3(0, 0, 0);
 					this.label2.Text = "Tacking";
 					game();
 					break;
-				case Keys.F5:
+				case Keys.F3:
 					this.projectData.cameraMode = CameraMode.Moving;
 					this.projectData.trackedObject = 0;
-					this.projectData.cameraPosition = new Vector3(0, 0, 12);
+					this.projectData.cameraPosition = new Vector3(0, -10, 20);
 					this.projectData.cameraTarget = new Vector3(0, 0, 0);
 					this.label2.Text = "Moving";
-					game();
-					break;
-				case Keys.F3:
-					this.projectData.cameraMode = CameraMode.Static;
-					this.projectData.cameraPosition = new Vector3(20, -15, 0);
-					this.projectData.cameraTarget = new Vector3(0, 0, 0);
-					this.label2.Text = "Static";
-					game();
-					break;
-				case Keys.F1:
-					this.projectData.cameraMode = CameraMode.Static;
-					this.projectData.cameraPosition = new Vector3(-20, -15, 0);
-					this.projectData.cameraTarget = new Vector3(0, 0, 0);
-					this.label2.Text = "Static";
-					game();
-					break;
-				case Keys.F6:
-					this.projectData.cameraMode = CameraMode.Static;
-					this.projectData.cameraPosition = new Vector3(20, 0, 0);
-					this.projectData.cameraTarget = new Vector3(0, 0, 0);
-					this.label2.Text = "Static";
-					game();
-					break;
-				case Keys.F7:
-					this.projectData.cameraMode = CameraMode.Static;
-					this.projectData.cameraPosition = new Vector3(-12, 0, 0);
-					this.projectData.cameraTarget = new Vector3(0, 0, 0);
-					this.label2.Text = "Static";
-					game();
-					break;
-				case Keys.F8:
-					this.projectData.cameraMode = CameraMode.Static;
-					this.projectData.cameraPosition = new Vector3(0, 0, -12);
-					this.projectData.cameraTarget = new Vector3(0, 0, 0);
-					this.label2.Text = "Static";
 					game();
 					break;
 				case Keys.Space:
@@ -231,25 +221,33 @@ namespace ChessAnimation
 					}
 					break;
 				case Keys.Q:
-					this.projectData.interpolateColor = !this.projectData.interpolateColor;
+					this.projectData.colorMode = ColorMode.Static;
 					game();
 					break;
 				case Keys.W:
-					this.projectData.fillColor = !this.projectData.fillColor;
+					this.projectData.colorMode = ColorMode.Gouraud;
 					game();
 					break;
 				case Keys.E:
+					this.projectData.colorMode = ColorMode.Phong;
+					game();
+					break;
+				case Keys.Z:
+					this.projectData.fillColor = !this.projectData.fillColor;
+					game();
+					break;
+				case Keys.X:
 					this.projectData.drawOutline = !this.projectData.drawOutline;
 					game();
 					break;
-				case Keys.R:
+				case Keys.C:
 					this.projectData.fog = !this.projectData.fog;
-					Debug.WriteLine("Fog: " + projectData.fog);
+					//Debug.WriteLine("Fog: " + projectData.fog);
 					game();
 					break;
-				case Keys.D:
+				/*case Keys.D:
 					this.projectData.debug = !this.projectData.debug;
-					break;
+					break;*/
 			}
 
 		}
@@ -305,6 +303,36 @@ namespace ChessAnimation
 			Filler.fillObjects(projectData);
 			this.pictureBox_workingArea.Refresh();
 			this.Focus();
+		}
+
+		private void trackBar_x_Scroll(object sender, EventArgs e)
+		{
+			float newX = this.trackBar_x.Value - 50;
+			this.label_x.Text = newX.ToString();
+			projectData.cameraPosition = new Vector3(newX, projectData.cameraPosition.Y, projectData.cameraPosition.Z);
+			
+			Filler.fillObjects(projectData);
+			this.pictureBox_workingArea.Refresh();
+		}
+
+		private void trackBar_y_Scroll(object sender, EventArgs e)
+		{
+			float newY = this.trackBar_y.Value - 50;
+			this.label_y.Text = newY.ToString();
+			projectData.cameraPosition = new Vector3(projectData.cameraPosition.X, newY, projectData.cameraPosition.Z);
+			
+			Filler.fillObjects(projectData);
+			this.pictureBox_workingArea.Refresh();
+		}
+
+		private void trackBar_z_Scroll(object sender, EventArgs e)
+		{
+			float newZ = this.trackBar_z.Value - 50;
+			this.label_z.Text = newZ.ToString();
+			projectData.cameraPosition = new Vector3(projectData.cameraPosition.X, projectData.cameraPosition.Y, newZ);
+			
+			Filler.fillObjects(projectData);
+			this.pictureBox_workingArea.Refresh();
 		}
 	}
 }

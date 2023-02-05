@@ -32,12 +32,12 @@ namespace ChessAnimation.Utility
 		public Matrix4x4 P { get; set; }
 		public CameraMode cameraMode { get; set; } = CameraMode.Static;
 		public int trackedObject { get; set; }
-		public Vector3 cameraPosition { get; set; } = new Vector3(0, 0, 12);
+		public Vector3 cameraPosition { get; set; } = new Vector3(0, -10, 20);
 		public Vector3 cameraTarget { get; set; } = new Vector3(0, 0, 0);
 		public Vector3 cameraUpVector { get; set; } = Vector3.UnitY;
 
 		// position
-		public Vector3 position { get; set; } = new Vector3(-4, 0, 0);
+		public Vector3 position { get; set; } = new Vector3(-10, 0, 0);
 
 		// sun
 		public Vector3 spotlightPosition { get; set; } = new Vector3(0, 5, -20);
@@ -50,12 +50,13 @@ namespace ChessAnimation.Utility
 		public Color spotlightColor { get; set; } = Color.FromArgb(200, 10, 10);
 
 		// fog
-		public bool fog { get; set; } = false;
-		public float fogStart { get; set; } = 1.9f;
-		public float fogEnd { get; set; } = 1.95f;
+		public bool fog { get; set; } = true;
+		public float fogStart { get; set; } = 1.92f;
+		public float fogEnd { get; set; } = 1.98f;
 
 		// booleans
 		public bool interpolateColor { get; set; } = true;
+		public ColorMode colorMode { get; set; } = ColorMode.Gouraud;
 		public bool drawOutline { get; set; } = true;
 		public bool fillColor { get; set; } = false;
 		public bool debug { get; set; } = false;

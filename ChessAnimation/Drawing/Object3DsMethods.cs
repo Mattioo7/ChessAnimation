@@ -17,24 +17,28 @@ namespace ChessAnimation.Drawing
 			Matrix4x4 S = Matrix4x4.CreateScale(scale);
 			Matrix4x4 R = Matrix4x4.CreateRotationY(angle);
 			Matrix4x4 T = Matrix4x4.CreateTranslation(position);
-			Matrix4x4 V = projectData.V;
 
-			obj.position = Vector4.Transform(Vector3.Zero, S * R * T);
+			Matrix4x4 modelMatrix = S * R * T;
+			obj.position = Vector4.Transform(Vector3.Zero, modelMatrix);
 			
+			Matrix4x4 V = projectData.V;
 			Matrix4x4 P = projectData.P;
 
-			/*Matrix4x4 matrix = S * R * V * P;*/
-			Matrix4x4 matrix = S * R * T * V * P;
+			Matrix4x4 totalMatrix = modelMatrix * V * P;
 
 			for (int ii = 0; ii < obj.polygons.Count; ++ii)
 			{
 				List<Vertex> vertices = obj.polygons[ii].vertices;
 				List<Vertex> verticesCopy = obj.polygons[ii].verticesCopy;
+				List<Vertex> verticesInWorld = obj.polygons[ii].verticesInWorld;
 
 				for (int i = 0; i < vertices.Count; i++)
 				{
-					verticesCopy[i] = Vertex.Transform(vertices[i], matrix);
+					verticesCopy[i] = Vertex.Transform(vertices[i], totalMatrix);
 					verticesCopy[i] = verticesCopy[i] / verticesCopy[i].w;
+
+					verticesInWorld[i] = Vertex.Transform(vertices[i], modelMatrix);
+					verticesInWorld[i] = verticesInWorld[i] / verticesInWorld[i].w;
 				}
 			}
 		}
